@@ -1,0 +1,15 @@
+{
+  "name": "audio-merge",
+  "version": "1.0.0",
+  "description": "a native hybrid app to batch-merge audio files",
+  "main": "main.js",
+  "scripts": {
+    "test": "test-merge"
+  },
+  "author": "attila vago",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "formidable": "^1.1.1"
+  }
+}
