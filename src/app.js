@@ -2,7 +2,8 @@
 
 $('.main-content').slick({
     arrows: false,
-    draggable: false
+    draggable: false,
+    adaptiveHeight: true
   });
 
 var folder_path = '';
@@ -49,25 +50,28 @@ $('#chooseDest').click(function(){
 
 $('#left-trigger').click(function(){
   chooseFileLeft('#fileDialogLeft');
+  $(this).closest('.instruction').find('h4').fadeOut();
+  $(this).closest('.instruction').removeClass('instruction').appendTo('#left-file-pool').addClass('barcontrols');
 });
 
 $('#right-trigger').click(function(){
   chooseFileRight('#fileDialogRight');
+  $(this).closest('.instruction').find('h4').fadeOut();
+  $(this).closest('.instruction').removeClass('instruction').appendTo('#right-file-pool').addClass('barcontrols');
 });
 
   function chooseFileLeft(name) {
     var chooser = $(name);
     chooser.unbind('change');
     chooser.change(function(evt) {
-      var files = $('#fileDialogLeft')[0].files;
+    var files = $('#fileDialogLeft')[0].files;
 		for (var i = 0; i < files.length; ++i){
 			console.log(files[i].name);
-  			$('#left-file-pool').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
+  			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
         console.log(leftSoundsArray);
 		}
     });
-
     chooser.trigger('click');  
   }
 
@@ -78,7 +82,7 @@ $('#right-trigger').click(function(){
       var files = $('#fileDialogRight')[0].files;
       for (var i = 0; i < files.length; ++i){
         console.log(files[i].name);
-          $('#right-file-pool').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
+          $('#right-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
           rightSoundsArray.push(files[i].path);
           console.log(rightSoundsArray);
       }

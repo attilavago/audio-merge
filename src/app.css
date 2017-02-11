@@ -1,8 +1,20 @@
+@font-face {
+    font-family: Pacifico-Regular;
+    src: url(Pacifico-Regular.ttf);
+}
+
+@font-face {
+    font-family: Roboto-Regular;
+    src: url(Roboto-Regular.ttf);
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: hidden;
+	background-color: #6599FF;
+	font-family: 'Roboto-Regular', sans-serif;
 }
 
 * {
@@ -12,52 +24,40 @@ html, body {
 	margin: 0;
 }
 
+h1 {
+	font-family: 'Pacifico-Regular', cursive;
+	font-size: 40px;
+	color: white;
+	line-height: 40px;
+}
+
 header {
-	height: 10%;
+	height: 20%;
+	text-align: center;
+}
+
+header > div {
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+header > div > h4 {
+	color: white;
 }
 
 section {
-	height: 80%;
+	height: 70%;
 }
 
-#left {
-	width: 50%;
-	height: 100%;
-	float: left;
+.slick-track, 
+.slick-list {
+	height: 100% !important;
 }
 
-#right {
-	width: 50%;
-	height: 100%;
-	float: right;
-}
-
-#left-file-pool, 
-#right-file-pool {
-	width: 100%;
-	height: 80%;
-	float: none;
-	overflow-y: scroll;
-}
-
-#left > button, 
-#right > button {
-	height: 10%;
-	display: block;
-}
-
-#left-file-pool > a, 
-#right-file-pool > a {
-	display: block;
-	width: 100%;
-	float: none;
-	height: 30px;
-}
-
-footer {
-	height: 10%;
-	width: 100%;
-	float: none;
+.slick-slide {
+	padding-left: 50px;
+    padding-right: 50px;
 }
 
 #fileDialogLeft,
@@ -65,3 +65,96 @@ footer {
 #folder_dialog_input {
 	display: none;
 }
+
+#left {
+	width: 50%;
+	height: 100%;
+	float: left;
+	padding-right: 10px;
+}
+
+#right {
+	width: 50%;
+	height: 100%;
+	float: right;
+	padding-left: 10px;
+}
+
+.files {
+	height: 90%;
+	width: 100%;
+	overflow-y: scroll;
+}
+
+#left-file-pool > .instruction,
+#right-file-pool > .instruction {
+	position: absolute;
+  	margin: auto;
+  	top: 0; left: 0; bottom: 0; right: 0;
+  	height: 20px;
+  	text-align: center;
+}
+
+#left-file-pool, 
+#right-file-pool {
+	width: 100%;
+	height: 90%;
+	float: none;
+	background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    position: relative;
+    padding: 5px;
+}
+
+.instruction > button {
+	height: 40px;
+    display: block;
+    width: 100px;
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: #FF9900;
+    color: white;
+}
+
+.barcontrols > button {
+	height: 40px;
+    display: block;
+    width: 100px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 15px;
+    background-color: #FF9900;
+    color: white;
+    float: right;
+}
+
+#left-file-pool > .files > p, 
+#right-file-pool > .files > p {
+	height: 40px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 5px;
+    line-height: 40px;
+    padding-left: 20px;
+    color: #4e4e4e;
+    float: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+footer {
+	height: 10%;
+	width: 100%;
+	float: none;
+	text-align: center;
+	color: white;
+}
+
+footer > p {
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+

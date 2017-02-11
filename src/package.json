@@ -1,12 +1,12 @@
 {
-  "name": "node-webkit-express",
+  "name": "AudHesive",
   "version": "0.0.2",
-  "description": "node-webkit-express is a very small nodejs app that runs expressjs in node-webkit.",
+  "description": "A small Node.js based app that allows merging pairs of audio files.",
   "main": "index.html",
   "window": {
-    "width": 600,
-    "height": 500,
-    "title": "m-cms edit",
+    "width": 1024,
+    "height": 730,
+    "title": "AudHesive",
     "toolbar": true
   },
   "scripts": {

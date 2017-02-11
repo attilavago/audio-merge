@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>AudHesive</title>
   <link rel="stylesheet" type="text/css" href="slick.css">
   <link rel="stylesheet" type="text/css" href="app.css">
   <script src="jquery-3.1.1.js"></script>
 </head>
 <body>
 <header>
-<h1>AudioMerge</h1>
+  <div>
+    <h1>AudHesive</h1>
+    <h4>Gluing your sounds together since 2017</h4>
+  </div>
 </header>
 <section class="main-content">
   <div>
     <div id="left">
-      <h4>Add the files you want to start your audio with:</h4>
-      <div id="left-file-pool"></div>
-      <button id="left-trigger">Add Files</button>
+      <div id="left-file-pool">
+        <div class="files">
+          <!-- files get appended here -->
+        </div>
+        <div class="instruction">
+          <h4>Add the files you want to start your audio with:</h4>
+          <button id="left-trigger">Add Files</button>
+        </div>
+      </div>
       <input id="fileDialogLeft" type="file" multiple/>
     </div>
     <div id="right">
-      <h4>Add the files you want to end your audio with:</h4>
-      <div id="right-file-pool"></div>
-      <button id="right-trigger">Add Files</button>
+      <div id="right-file-pool">
+        <div class="files">
+          <!-- files get appended here -->
+        </div>
+        <div class="instruction">
+          <h4>Add the files you want to end your audio with:</h4>
+          <button id="right-trigger">Add Files</button>
+        </div>
+      </div>
       <input id="fileDialogRight" type="file" multiple/>
     </div>
   </div>
@@ -33,7 +49,7 @@
   </div>
 </section>
 <footer>
-  C-2017
+  <p>&copy; 2017 - Attila Vago</p>
 </footer>
 <script src="slick.js"></script>
 <script src="app.js"></script>
