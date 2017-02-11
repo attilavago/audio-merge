@@ -1,5 +1,9 @@
-const fs = require('fs');
+//const fs = require('fs');
 
+$('.main-content').slick({
+    arrows: false,
+    draggable: false
+  });
 
 var folder_path = '';
 var leftSoundsArray = [];
@@ -12,6 +16,9 @@ function chooseDestFolder(){
         folder_path = $(this).val();
         $(this).val(''); // Reset value of selected directory (so change event will *always* be triggered)
         console.log(folder_path);
+        setTimeout(function(){
+          $('.main-content').slick('slickNext');
+        }, 1000);
     });
     chooser.trigger('click'); 
 }
@@ -69,12 +76,15 @@ $('#right-trigger').click(function(){
     chooser.unbind('change');
     chooser.change(function(evt) {
       var files = $('#fileDialogRight')[0].files;
-    for (var i = 0; i < files.length; ++i){
-      console.log(files[i].name);
-        $('#right-file-pool').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
-        rightSoundsArray.push(files[i].path);
-        console.log(rightSoundsArray);
-    }
+      for (var i = 0; i < files.length; ++i){
+        console.log(files[i].name);
+          $('#right-file-pool').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
+          rightSoundsArray.push(files[i].path);
+          console.log(rightSoundsArray);
+      }
+      setTimeout(function(){
+        $('.main-content').slick('slickNext');
+      }, 1000);
     });
 
     chooser.trigger('click');  
