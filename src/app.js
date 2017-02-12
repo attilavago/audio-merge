@@ -1,4 +1,4 @@
-const fs = require('fs');
+//const fs = require('fs');
 
 $('.main-content').slick({
     arrows: false,
@@ -65,15 +65,17 @@ $('#right-trigger').click(function(){
     var chooser = $(name);
     chooser.unbind('change');
     chooser.change(function(evt) {
-    var files = $('#fileDialogLeft')[0].files;
+    var files = $('#fileDialogLeft')[0].files; 
+    $('#left > .fileCounter > span').empty();
 		for (var i = 0; i < files.length; ++i){
 			console.log(files[i].name);
   			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
         console.log(leftSoundsArray);
 		}
+    $('#left > .fileCounter > span').append(leftSoundsArray.length);
     });
-    chooser.trigger('click');  
+    chooser.trigger('click');
   }
 
   function chooseFileRight(name) {
@@ -81,6 +83,7 @@ $('#right-trigger').click(function(){
     chooser.unbind('change');
     chooser.change(function(evt) {
       var files = $('#fileDialogRight')[0].files;
+      $('#right').append(`Total files: ${files.length}`);
       for (var i = 0; i < files.length; ++i){
         console.log(files[i].name);
           $('#right-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
