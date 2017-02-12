@@ -185,6 +185,17 @@ button#chooseDest, button#mergeFiles {
 	display: block;
 	margin: 0 auto;
 	margin-top: 10px;
+	width: 170px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+progress[value]::-webkit-progress-value {
+	background-color: #097054;
+	border-radius: 5px;
 }
 
 footer {

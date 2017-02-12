@@ -1,9 +1,10 @@
-const fs = require('fs');
+//const fs = require('fs');
 
 $('.main-content').slick({
     arrows: false,
     draggable: true,
-    adaptiveHeight: true
+    adaptiveHeight: true,
+    infinite: false
   });
 
 var folder_path = '';
