@@ -1,4 +1,4 @@
-//const fs = require('fs');
+const fs = require('fs');
 
 $('.main-content').slick({
     arrows: false,
@@ -66,14 +66,14 @@ $('#right-trigger').click(function(){
     chooser.unbind('change');
     chooser.change(function(evt) {
     var files = $('#fileDialogLeft')[0].files; 
-    $('#left > .fileCounter > span').empty();
+    $('#left > .fileCounter > .counter').empty();
 		for (var i = 0; i < files.length; ++i){
 			console.log(files[i].name);
   			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
         console.log(leftSoundsArray);
 		}
-    $('#left > .fileCounter > span').append(leftSoundsArray.length);
+    $('#left > .fileCounter > .counter').append(leftSoundsArray.length);
     });
     chooser.trigger('click');
   }
@@ -83,16 +83,25 @@ $('#right-trigger').click(function(){
     chooser.unbind('change');
     chooser.change(function(evt) {
       var files = $('#fileDialogRight')[0].files;
-      $('#right').append(`Total files: ${files.length}`);
+      $('#right > .fileCounter > .counter').empty();
       for (var i = 0; i < files.length; ++i){
         console.log(files[i].name);
           $('#right-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
           rightSoundsArray.push(files[i].path);
           console.log(rightSoundsArray);
       }
-      setTimeout(function(){
-        $('.main-content').slick('slickNext');
-      }, 1000);
+      $('#right > .fileCounter > .counter').append(rightSoundsArray.length);
+      if(leftSoundsArray.length == rightSoundsArray.length){
+        $('#left > .fileCounter > .error').empty();
+        $('#right > .fileCounter > .error').empty();
+        setTimeout(function(){
+          $('.main-content').slick('slickNext');
+        }, 1000);
+      } else if(leftSoundsArray.length < rightSoundsArray.length) {
+        $('#left > .fileCounter .error').append('You need to add more files.');
+      } else if(leftSoundsArray.length > rightSoundsArray.length) {
+        $('#right > .fileCounter .error').append('You need to add more files.');
+      }  
     });
 
     chooser.trigger('click');  
