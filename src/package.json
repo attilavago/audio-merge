@@ -1,13 +1,17 @@
 {
   "name": "AudHesive",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "A small Node.js based app that allows merging pairs of audio files.",
   "main": "index.html",
   "window": {
     "width": 1024,
     "height": 730,
     "title": "AudHesive",
-    "toolbar": true
+    "toolbar": true,
+    "min_width": 1024,
+    "min_height": 730,
+    "max_width": 1024,
+    "max_height": 730
   },
   "scripts": {
     "start": "nodewebkit"

@@ -1,6 +1,7 @@
 {
-  "name":"nw-demo-app",
-  "version":"1.0.0",
+  "name": "AudHesive",
+  "version": "0.0.1",
+  "description": "A small Node.js based app that allows merging pairs of audio files.",
   "devDependencies":{
     "nw":"^0.18.2",
     "nw-builder":"^3.1.3"
