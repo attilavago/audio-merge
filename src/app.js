@@ -1,4 +1,4 @@
-//const fs = require('fs');
+const fs = require('fs');
 
 $('.main-content').slick({
     arrows: false,
