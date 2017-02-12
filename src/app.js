@@ -1,8 +1,8 @@
-//const fs = require('fs');
+const fs = require('fs');
 
 $('.main-content').slick({
     arrows: false,
-    draggable: false,
+    draggable: true,
     adaptiveHeight: true
   });
 
@@ -17,6 +17,7 @@ function chooseDestFolder(){
         folder_path = $(this).val();
         $(this).val(''); // Reset value of selected directory (so change event will *always* be triggered)
         console.log(folder_path);
+        $('#chosenPath').append(`Destination: ${folder_path}`);
         setTimeout(function(){
           $('.main-content').slick('slickNext');
         }, 1000);
@@ -25,7 +26,12 @@ function chooseDestFolder(){
 }
 
 $('#mergeFiles').click(function(){
+  var arrayLen = leftSoundsArray.length;
+  var progVal = 100 / arrayLen;
+  var totalVal = 0;
   for(var i = 0; i < leftSoundsArray.length; i++){
+    totalVal = totalVal + progVal;
+    console.log(totalVal);
     var stream;
     //var soundPair = [];
     //soundPair = soundPair.push(leftSoundsArray[i]);
@@ -36,12 +42,13 @@ $('#mergeFiles').click(function(){
     stream = fs.createReadStream(rightSoundsArray[i]);
     stream.pipe(newFile, {end: false});
     stream.on('end', function() {
-        console.log('added file', stream);  
+        console.log('added file', stream);
+        $('.slide3content > progress').attr('value', totalVal);
     });
     //console.log('new file:', leftSoundsArray[i]+rightSoundsArray[i]);
     //
     //stream.pipe(dhh, {end: false});
-  }
+  } 
 });
 
 $('#chooseDest').click(function(){

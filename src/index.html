@@ -41,11 +41,18 @@
     </div>
   </div>
   <div>
-    <button id="chooseDest">Choose Destination</button>
-    <input id="folder_dialog_input" type="file" nwdirectory value="">
+    <div class="slide2content">
+      <h4>Where do you want to save your merged audio files?</h4>
+      <button id="chooseDest">Choose Destination</button>
+      <p id="chosenPath"></p>
+      <input id="folder_dialog_input" type="file" nwdirectory value="">
+    </div>
   </div>
   <div>
-    <button id="mergeFiles">Merge Files</button>
+    <div class="slide3content">
+      <button id="mergeFiles">Merge Files</button>
+      <progress value="0" max="100"></progress>
+    </div>
   </div>
 </section>
 <footer>

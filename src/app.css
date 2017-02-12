@@ -144,6 +144,43 @@ section {
     margin-bottom: 5px;
 }
 
+.slide2content {
+	text-align: center;
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+#chosenPath {
+	color: white;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+button#chooseDest, button#mergeFiles {
+	height: 40px;
+    display: block;
+    border-radius: 5px;
+    width: 170px;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-size: 15px;
+    background-color: #FF9900;
+    color: white;
+}
+
+.slide3content {
+	position: relative;
+  	top: 50%;
+  	transform: translateY(-50%);
+}
+
+.slide3content > progress {
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+
 footer {
 	height: 10%;
 	width: 100%;
