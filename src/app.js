@@ -17,7 +17,7 @@ function chooseDestFolder(){
     chooser.change(function(evt) {
         folder_path = $(this).val();
         $(this).val('');
-        console.log(folder_path);
+        //console.log(folder_path);
         $('#chosenPath').append(`Destination: ${folder_path}`);
         setTimeout(function(){
           $('.main-content').slick('slickNext');
@@ -32,7 +32,7 @@ $('#mergeFiles').click(function(){
   var totalVal = 0;
   for(var i = 0; i < leftSoundsArray.length; i++){
     totalVal = totalVal + progVal;
-    console.log(totalVal);
+    //console.log(totalVal);
     var stream;
     var newFile = fs.createWriteStream(`${folder_path}/newFile${i}.mp3`);
     stream = fs.createReadStream(leftSoundsArray[i]);
@@ -40,7 +40,7 @@ $('#mergeFiles').click(function(){
     stream = fs.createReadStream(rightSoundsArray[i]);
     stream.pipe(newFile, {end: false});
     stream.on('end', function() {
-        console.log('added file', stream);
+        //console.log('added file', stream);
         $('.slide3content > progress').attr('value', totalVal);
     });
   } 
@@ -69,10 +69,10 @@ $('#right-trigger').click(function(){
     var files = $('#fileDialogLeft')[0].files; 
     $('#left > .fileCounter > .counter').empty();
 		for (var i = 0; i < files.length; ++i){
-			console.log(files[i].name);
+			//console.log(files[i].name);
   			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
-        console.log(leftSoundsArray);
+        //console.log(leftSoundsArray);
 		}
     $('#left > .fileCounter > .counter').append(leftSoundsArray.length);
     });
@@ -86,10 +86,10 @@ $('#right-trigger').click(function(){
       var files = $('#fileDialogRight')[0].files;
       $('#right > .fileCounter > .counter').empty();
       for (var i = 0; i < files.length; ++i){
-        console.log(files[i].name);
+        //console.log(files[i].name);
           $('#right-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
           rightSoundsArray.push(files[i].path);
-          console.log(rightSoundsArray);
+          //console.log(rightSoundsArray);
       }
       $('#right > .fileCounter > .counter').append(rightSoundsArray.length);
       if(leftSoundsArray.length == rightSoundsArray.length){
