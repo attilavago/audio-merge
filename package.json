@@ -8,6 +8,6 @@
   },
   "scripts":{
     "dev":"nw src/",
-    "prod":"nwbuild --platforms osx64 --buildDir dist/ src/"
+    "prod":"nwbuild --platforms osx64,win64 --buildDir dist/ src/"
   }
 }
