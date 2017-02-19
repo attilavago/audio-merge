@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 $('.main-content').slick({
     arrows: false,
@@ -10,41 +11,6 @@ $('.main-content').slick({
 var folder_path = '';
 var leftSoundsArray = [];
 var rightSoundsArray = [];
-
-function chooseDestFolder(){
-  var chooser = $('#folder_dialog_input');
-    chooser.unbind('change');
-    chooser.change(function(evt) {
-        folder_path = $(this).val();
-        $(this).val('');
-        //console.log(folder_path);
-        $('#chosenPath').append(`Destination: ${folder_path}`);
-        setTimeout(function(){
-          $('.main-content').slick('slickNext');
-        }, 1000);
-    });
-    chooser.trigger('click'); 
-}
-
-$('#mergeFiles').click(function(){
-  var arrayLen = leftSoundsArray.length;
-  var progVal = 100 / arrayLen;
-  var totalVal = 0;
-  for(var i = 0; i < leftSoundsArray.length; i++){
-    totalVal = totalVal + progVal;
-    //console.log(totalVal);
-    var stream;
-    var newFile = fs.createWriteStream(`${folder_path}/newFile${i}.mp3`);
-    stream = fs.createReadStream(leftSoundsArray[i]);
-    stream.pipe(newFile, {end: false});
-    stream = fs.createReadStream(rightSoundsArray[i]);
-    stream.pipe(newFile, {end: false});
-    stream.on('end', function() {
-        //console.log('added file', stream);
-        $('.slide3content > progress').attr('value', totalVal);
-    });
-  } 
-});
 
 $('#chooseDest').click(function(){
   chooseDestFolder('#folder_dialog_input');
@@ -107,4 +73,43 @@ $('#right-trigger').click(function(){
 
     chooser.trigger('click');  
   }
+
+function chooseDestFolder(){
+  var chooser = $('#folder_dialog_input');
+    chooser.unbind('change');
+    chooser.change(function(evt) {
+        folder_path = $(this).val();
+        $(this).val('');
+        //console.log(folder_path);
+        $('#chosenPath').append(`Destination: ${folder_path}`);
+        setTimeout(function(){
+          $('.main-content').slick('slickNext');
+        }, 1000);
+    });
+    chooser.trigger('click'); 
+}
+
+$('#mergeFiles').click(function(){
+  var arrayLen = leftSoundsArray.length;
+  var progVal = 100 / arrayLen;
+  var totalVal = 0;
+  for(var i = 0; i < leftSoundsArray.length; i++){
+    var leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
+    var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
+    var outputFileName = `${leftFileName}_${rightFileName}`;
+    totalVal = totalVal + progVal;
+    //console.log(totalVal);
+    var stream;
+    var newFile = fs.createWriteStream(`${folder_path}/${outputFileName}${i}.mp3`);
+    $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`) 
+    stream = fs.createReadStream(leftSoundsArray[i]);
+    stream.pipe(newFile, {end: false});
+    stream = fs.createReadStream(rightSoundsArray[i]);
+    stream.pipe(newFile, {end: false});
+    stream.on('end', function() {
+        //console.log('added file', stream);
+        $('.slide3content > progress').attr('value', totalVal);
+    });
+  } 
+});
  
