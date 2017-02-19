@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+//const fs = require('fs');
+//const path = require('path');
 
 $('.main-content').slick({
     arrows: false,
@@ -20,12 +20,29 @@ $('#left-trigger').click(function(){
   chooseFileLeft('#fileDialogLeft');
   $(this).closest('.instruction').find('h4').fadeOut();
   $(this).closest('.instruction').removeClass('instruction').appendTo('#left-file-pool').addClass('barcontrols');
+  $('#left-remove').show();
 });
 
 $('#right-trigger').click(function(){
   chooseFileRight('#fileDialogRight');
   $(this).closest('.instruction').find('h4').fadeOut();
   $(this).closest('.instruction').removeClass('instruction').appendTo('#right-file-pool').addClass('barcontrols');
+  $('#right-remove').show();
+});
+
+$('#left-remove').click(function(){
+  $('#left-file-pool > .files').empty();
+  leftSoundsArray = [];
+  console.log('empty left', leftSoundsArray);
+  $('#left > .fileCounter > .counter').empty();
+  $('#left > .fileCounter > .counter').append(leftSoundsArray.length);
+});
+
+$('#right-remove').click(function(){
+  $('#right-file-pool > .files').empty();
+  rightSoundsArray = [];
+  $('#right > .fileCounter > .counter').empty();
+  $('#right > .fileCounter > .counter').append(rightSoundsArray.length);
 });
 
   function chooseFileLeft(name) {
@@ -38,7 +55,7 @@ $('#right-trigger').click(function(){
 			//console.log(files[i].name);
   			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
-        //console.log(leftSoundsArray);
+        console.log(leftSoundsArray);
 		}
     $('#left > .fileCounter > .counter').append(leftSoundsArray.length);
     });

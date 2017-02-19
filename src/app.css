@@ -130,6 +130,12 @@ section {
     float: right;
 }
 
+#left-remove,
+#right-remove {
+	display: none;
+	float: left;
+}
+
 #left-file-pool > .files > p, 
 #right-file-pool > .files > p,
 #outputFiles > p {
