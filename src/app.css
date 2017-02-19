@@ -131,7 +131,8 @@ section {
 }
 
 #left-file-pool > .files > p, 
-#right-file-pool > .files > p {
+#right-file-pool > .files > p,
+#outputFiles > p {
 	height: 40px;
     width: 100%;
     background-color: rgba(255,255,255,0.5);
@@ -196,6 +197,15 @@ progress[value]::-webkit-progress-bar {
 progress[value]::-webkit-progress-value {
 	background-color: #097054;
 	border-radius: 5px;
+}
+
+#outputFiles {
+	height: 250px;
+    margin-top: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    padding: 5px;
+    overflow-y: scroll;
 }
 
 footer {
