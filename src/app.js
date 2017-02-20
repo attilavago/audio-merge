@@ -1,6 +1,7 @@
 //const fs = require('fs');
 const path = require('path');
-const fs = require('fs-extra')
+const fs = require('fs-extra');
+const CombinedStream = require('combined-stream');
 
 $('.main-content').slick({
     arrows: false,
@@ -147,17 +148,15 @@ $('#mergeFiles').click(function(){
     var outputFileName = `${leftFileName}_${rightFileName}`;
     totalVal = totalVal + progVal;
     //console.log(totalVal);
-    var stream;
-    var newFile = fs.createWriteStream(`${folder_path}/${outputFileName}${i}.mp3`);
+    var combinedStream = CombinedStream.create();
+    combinedStream.append(fs.createReadStream(leftSoundsArray[i]));
+    combinedStream.append(fs.createReadStream(rightSoundsArray[i]));
+
+    combinedStream.pipe(fs.createWriteStream(`${folder_path}/${outputFileName}${i}.mp3`));
+
     $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`) 
-    stream = fs.createReadStream(leftSoundsArray[i]);
-    stream.pipe(newFile, {end: false});
-    stream = fs.createReadStream(rightSoundsArray[i]);
-    stream.pipe(newFile, {end: false});
-    stream.on('end', function() {
-        //console.log('added file', stream);
-        $('.slide3content > progress').attr('value', totalVal);
-    });
+    $('.slide3content > progress').attr('value', totalVal);
+    
   } 
 });
  
