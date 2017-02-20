@@ -104,36 +104,71 @@ function chooseDestFolder(){
         setTimeout(function(){
           $('.main-content').slick('slickNext');
         }, 1000);
+        // copy files to selected directory
     });
     chooser.trigger('click'); 
 }
 
-var copyLeft = function(){
+var copyLeft = function(i){
   var promise = new Promise(function(resolve, reject){
-    var leftFileName = path.basename(leftSoundsArray[0]).replace(/\.[^/.]+$/, "");
+    leftSoundsArray;
+    var leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var leftStream;
     var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
-    leftStream = fs.createReadStream(leftSoundsArray[0]);
+    leftStream = fs.createReadStream(leftSoundsArray[i]);
     leftStream.pipe(leftCopy, {end: false});
     leftStream.on('end', function() {
-      resolve(leftCopy);
+      console.log('left');
+      resolve(i);
     });
   });
   return promise;
 }
 
-var copyRight = function(leftCopy){
+var copyRight = function(i){
   var promise = new Promise(function(resolve, reject){
-    var rightFileName = path.basename(rightSoundsArray[0]).replace(/\.[^/.]+$/, "");
+    rightSoundsArray;
+    var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var rightStream;
     var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
-    rightStream = fs.createReadStream(rightSoundsArray[0]);
+    rightStream = fs.createReadStream(rightSoundsArray[i]);
     rightStream.pipe(rightCopy, {end: false});
     rightStream.on('end', function() {
-      resolve(rightCopy);
+      console.log('right');
+      resolve(i);
     });
   });
   return promise;
+}
+
+var merge = function(i){
+  var promise = new Promise(function(resolve, reject){
+    var files = fs.readdirSync(`${folder_path}`),
+    clips = [],
+    stream,
+    currentfile,
+    dhh = fs.createWriteStream(`${folder_path}/testsound.mp3`);
+
+    files.forEach(function (file) {
+      clips.push(file);  
+    });
+
+    function main() {
+    if (!clips.length) {
+            dhh.end("Done");
+            return;
+        }
+        currentfile = clips.shift();
+        stream = fs.createReadStream(currentfile);
+        stream.pipe(dhh, {end: false});
+        stream.on("end", function() {
+            console.log(currentfile + ' appended');
+            main();        
+        });
+    }
+    main();
+
+  });
 }
 
 
@@ -148,12 +183,35 @@ $('#mergeFiles').click(function(){
     var outputFileName = `${leftFileName}_${rightFileName}`;
     totalVal = totalVal + progVal;
     //console.log(totalVal);
+    /*
+    var leftStream;
+    var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
+    leftStream = fs.createReadStream(leftSoundsArray[i]);
+    leftStream.pipe(leftCopy, {end: false});
+    leftStream.on('end', function() {
+      console.log(leftCopy);
+    });
+          
+    var rightStream;
+    var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
+    rightStream = fs.createReadStream(rightSoundsArray[i]);
+    rightStream.pipe(rightCopy, {end: false});
+    rightStream.on('end', function() {
+      console.log(rightCopy);
+    });
+     */
+
+     copyLeft(i)
+      .then(copyRight)
+      .then(merge);
+
+    /*
     var combinedStream = CombinedStream.create();
     combinedStream.append(fs.createReadStream(leftSoundsArray[i]));
     combinedStream.append(fs.createReadStream(rightSoundsArray[i]));
 
-    combinedStream.pipe(fs.createWriteStream(`${folder_path}/${outputFileName}${i}.mp3`));
-
+    combinedStream.pipe(fs.createWriteStream(`${folder_path}/${outputFileName}.mp3`));
+    */
     $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`) 
     $('.slide3content > progress').attr('value', totalVal);
     
