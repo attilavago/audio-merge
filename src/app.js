@@ -1,5 +1,6 @@
 //const fs = require('fs');
-//const path = require('path');
+const path = require('path');
+const fs = require('fs-extra')
 
 $('.main-content').slick({
     arrows: false,
@@ -106,6 +107,36 @@ function chooseDestFolder(){
     chooser.trigger('click'); 
 }
 
+var copyLeft = function(){
+  var promise = new Promise(function(resolve, reject){
+    var leftFileName = path.basename(leftSoundsArray[0]).replace(/\.[^/.]+$/, "");
+    var leftStream;
+    var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
+    leftStream = fs.createReadStream(leftSoundsArray[0]);
+    leftStream.pipe(leftCopy, {end: false});
+    leftStream.on('end', function() {
+      resolve(leftCopy);
+    });
+  });
+  return promise;
+}
+
+var copyRight = function(leftCopy){
+  var promise = new Promise(function(resolve, reject){
+    var rightFileName = path.basename(rightSoundsArray[0]).replace(/\.[^/.]+$/, "");
+    var rightStream;
+    var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
+    rightStream = fs.createReadStream(rightSoundsArray[0]);
+    rightStream.pipe(rightCopy, {end: false});
+    rightStream.on('end', function() {
+      resolve(rightCopy);
+    });
+  });
+  return promise;
+}
+
+
+
 $('#mergeFiles').click(function(){
   var arrayLen = leftSoundsArray.length;
   var progVal = 100 / arrayLen;
@@ -129,4 +160,13 @@ $('#mergeFiles').click(function(){
     });
   } 
 });
+ 
+
+
+
+
+
+
+
+
  

@@ -8,9 +8,11 @@
   },
   "scripts": {
     "dev": "nw src/",
-    "prod": "nwbuild --platforms osx64,win64 --buildDir dist/ src/"
+    "prod": "nwbuild --platforms osx64 --buildDir dist/ src/"
   },
   "dependencies": {
+    "copy": "^0.3.0",
+    "fs-extra": "^2.0.0",
     "path": "^0.12.7"
   }
 }
