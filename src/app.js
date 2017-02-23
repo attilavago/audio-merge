@@ -120,7 +120,7 @@ var copyLeft = function(i){
     leftSoundsArray;
     var leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var leftStream;
-    var leftCopy = fs.createWriteStream(`${tempDir}/${leftFileName}.mp3`);
+    var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
     leftStream = fs.createReadStream(leftSoundsArray[i]);
     leftStream.pipe(leftCopy, {end: false});
     leftStream.on('end', function() {
@@ -136,7 +136,7 @@ var copyRight = function(i){
     rightSoundsArray;
     var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var rightStream;
-    var rightCopy = fs.createWriteStream(`${tempDir}/${rightFileName}.mp3`);
+    var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
     rightStream = fs.createReadStream(rightSoundsArray[i]);
     rightStream.pipe(rightCopy, {end: false});
     rightStream.on('end', function() {
@@ -149,8 +149,8 @@ var copyRight = function(i){
 
 var merge = function(i){
   var promise = new Promise(function(resolve, reject){
-    
-    testMergePairs();
+    folder_path;
+    testMergePairs(folder_path);
     /*
     const spawn = require('child_process').spawn;
     const child = spawn(process.argv[0], ['test.js'], {

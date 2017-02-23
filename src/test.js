@@ -15,13 +15,13 @@ var proc = ffmpeg('/Users/attilavago/documents/sites/development/audio-merge/tes
     .mergeToFile('/Users/attilavago/documents/sites/development/audio-merge/test/test.wav');
 */
 
-function testMergePairs(){
+function testMergePairs(folder){
 	var fs = require('fs'),
-    files = fs.readdirSync('/Users/attilavago/documents/sites/development/audio-merge/test'),
+    files = fs.readdirSync(folder),
     clips = [],
     stream,
     currentfile,
-    dhh = fs.createWriteStream('/Users/attilavago/documents/sites/development/audio-merge/test/dhh-interview.mp3');
+    dhh = fs.createWriteStream(folder+'/dhh-interview.mp3');
 
 	// create an array with filenames (time)
 
