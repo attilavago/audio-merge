@@ -39,7 +39,7 @@ function testMergePairs(folder){
 	        return;
 	    }
 	    
-	    currentfile = '/Users/attilavago/documents/sites/development/audio-merge/test/'+clips.shift();
+	    currentfile = folder+'/'+clips.shift();
 	    stream = fs.createReadStream(currentfile);
 	    
 	    stream.pipe(dhh, {end: false});

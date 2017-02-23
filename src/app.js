@@ -122,7 +122,7 @@ var copyLeft = function(i){
     var leftStream;
     var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
     leftStream = fs.createReadStream(leftSoundsArray[i]);
-    leftStream.pipe(leftCopy, {end: false});
+    leftStream.pipe(leftCopy);
     leftStream.on('end', function() {
       console.log('left');
       resolve(i);
@@ -138,7 +138,7 @@ var copyRight = function(i){
     var rightStream;
     var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
     rightStream = fs.createReadStream(rightSoundsArray[i]);
-    rightStream.pipe(rightCopy, {end: false});
+    rightStream.pipe(rightCopy);
     rightStream.on('end', function() {
       console.log('right');
       resolve(i);
@@ -175,8 +175,8 @@ $('#mergeFiles').click(function(){
     var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var outputFileName = `${leftFileName}_${rightFileName}`;
     totalVal = totalVal + progVal;
-    copyRight(i)
-      .then(copyLeft)
+    copyLeft(i)
+      .then(copyRight)
       .then(merge);
     $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`); 
     /*
