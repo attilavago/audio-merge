@@ -4,8 +4,10 @@ const fs = require('fs-extra');
 const ffmpeg = require('ffmpeg');
 const Audioconcat = require('audioconcat');
 const mkdirp = require('mkdirp');
-const {testMergePairs} = require('./test.js');
-var tempDir = '/Users/attilavago/documents/sites/development/audio-merge/test';
+const {fileMergePairs} = require('./test.js');
+var tempDir; 
+
+
     
 $('.main-content').slick({
     arrows: false,
@@ -17,6 +19,7 @@ $('.main-content').slick({
 var folder_path = '';
 var leftSoundsArray = [];
 var rightSoundsArray = [];
+var outputFileName = '';
 
 $('#chooseDest').click(function(){
   chooseDestFolder('#folder_dialog_input');
@@ -104,6 +107,11 @@ function chooseDestFolder(){
         $(this).val('');
         //console.log(folder_path);
         $('#chosenPath').append(`Destination: ${folder_path}`);
+        mkdirp(`${folder_path}/temp`, function (err) {
+            if (err) console.error(err)
+            else console.log('Created temp location.');
+            tempDir = `${folder_path}/temp`;
+        });
         setTimeout(function(){
           $('.main-content').slick('slickNext');
         }, 1000);
@@ -150,17 +158,15 @@ var copyRight = function(i){
 var merge = function(i){
   var promise = new Promise(function(resolve, reject){
     folder_path;
-    testMergePairs(folder_path);
-    /*
-    const spawn = require('child_process').spawn;
-    const child = spawn(process.argv[0], ['test.js'], {
-      detached: true,
-      stdio: 'ignore'
-    });
-    child.unref();
-    */
+    leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
+    rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
+    outputFileName = `${leftFileName}_${rightFileName}`;
+    console.log('merged:', outputFileName);
+    fileMergePairs(tempDir, folder_path, outputFileName);
   });
 }
+
+
 
 
 
@@ -171,45 +177,21 @@ $('#mergeFiles').click(function(){
   var progVal = 100 / arrayLen;
   var totalVal = 0;
   for(var i = 0; i < leftSoundsArray.length; i++){
-    var leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
-    var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
-    var outputFileName = `${leftFileName}_${rightFileName}`;
     totalVal = totalVal + progVal;
     copyLeft(i)
       .then(copyRight)
       .then(merge);
     $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`); 
     /*
-    stream = fs.createReadStream(leftSoundsArray[i]);
-    stream.pipe(newFile, {end: false, highWaterMark: 10000});
-    stream = fs.createReadStream(rightSoundsArray[i]);
-    stream.pipe(newFile, {end: false, highWaterMark: 10000});
     stream.on('end', function() {
         //console.log('added file', stream);
         $('.slide3content > progress').attr('value', totalVal);
     });
     */
-    //$('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`) 
     //$('.slide3content > progress').attr('value', totalVal);
     
   } 
 });
-
-$('#test').on('click',function(){
-  fs.unlink(`${tempDir}/.DS_Store`, function(){
-    
-  const spawn = require('child_process').spawn;
-
-const child = spawn(process.argv[0], ['test.js'], {
-  detached: true,
-  stdio: 'ignore'
-});
-
-child.unref();
-
-});
-});
- 
 
 
 

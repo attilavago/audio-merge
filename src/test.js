@@ -15,13 +15,13 @@ var proc = ffmpeg('/Users/attilavago/documents/sites/development/audio-merge/tes
     .mergeToFile('/Users/attilavago/documents/sites/development/audio-merge/test/test.wav');
 */
 
-function testMergePairs(folder){
+function fileMergePairs(temp, folder, mergedFile){
 	var fs = require('fs'),
     files = fs.readdirSync(folder),
     clips = [],
     stream,
     currentfile,
-    dhh = fs.createWriteStream(folder+'/dhh-interview.mp3');
+    dhh = fs.createWriteStream(`${folder}/${mergedFile}.mp3`);
 
 	// create an array with filenames (time)
 
@@ -45,7 +45,7 @@ function testMergePairs(folder){
 	    stream.pipe(dhh, {end: false});
 	    
 	    stream.on("end", function() {
-	        console.log(currentfile + ' appended');
+	        fs.unlinkSync(currentfile);
 	        main();        
 	    });
 	}
@@ -55,6 +55,6 @@ function testMergePairs(folder){
 }
 
 //testMergePairs();
-module.exports = { testMergePairs };
+module.exports = { fileMergePairs };
 
 
