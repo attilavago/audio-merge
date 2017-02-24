@@ -107,10 +107,10 @@ function chooseDestFolder(){
         $(this).val('');
         //console.log(folder_path);
         $('#chosenPath').append(`Destination: ${folder_path}`);
-        mkdirp(`${folder_path}/temp`, function (err) {
+        mkdirp(`${folder_path}/merged`, function (err) {
             if (err) console.error(err)
             else console.log('Created temp location.');
-            tempDir = `${folder_path}/temp`;
+            tempDir = `${folder_path}/merged`;
         });
         setTimeout(function(){
           $('.main-content').slick('slickNext');

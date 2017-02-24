@@ -21,7 +21,7 @@ function fileMergePairs(temp, folder, mergedFile){
     clips = [],
     stream,
     currentfile,
-    dhh = fs.createWriteStream(`${folder}/${mergedFile}.mp3`);
+    dhh = fs.createWriteStream(`${temp}/${mergedFile}.mp3`);
 
 	// create an array with filenames (time)
 
