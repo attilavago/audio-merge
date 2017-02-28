@@ -1,19 +1,4 @@
-/*
-var FfmpegCommand = require('fluent-ffmpeg');
-var command = new FfmpegCommand();
 
-var proc = ffmpeg('/Users/attilavago/documents/sites/development/audio-merge/test/ss_economics_sp_accion.wav')
-    .input('/Users/attilavago/documents/sites/development/audio-merge/test/ss_econ_glossary_absolute_advantage.wav')
-    //.input(fourthFile)
-    //.input(...)
-    .on('end', function() {
-      console.log('files have been merged succesfully');
-    })
-    .on('error', function(err) {
-      console.log('an error happened: ' + err.message);
-    })
-    .mergeToFile('/Users/attilavago/documents/sites/development/audio-merge/test/test.wav');
-*/
 
 function fileMergePairs(temp, folder, mergedFile){
 	var fs = require('fs'),
@@ -45,7 +30,7 @@ function fileMergePairs(temp, folder, mergedFile){
 	    stream.pipe(dhh, {end: false});
 	    
 	    stream.on("end", function() {
-	        fs.unlinkSync(currentfile);
+	        //fs.unlinkSync(currentfile);
 	        main();        
 	    });
 	}

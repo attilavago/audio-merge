@@ -1,11 +1,10 @@
 //const fs = require('fs');
 const path = require('path');
 const fs = require('fs-extra');
-const ffmpeg = require('ffmpeg');
-const Audioconcat = require('audioconcat');
 const mkdirp = require('mkdirp');
 const {fileMergePairs} = require('./test.js');
 var tempDir; 
+var tempPairFolder;
 
 
     
@@ -112,6 +111,13 @@ function chooseDestFolder(){
             else console.log('Created temp location.');
             tempDir = `${folder_path}/merged`;
         });
+        for(var i = 0; i < leftSoundsArray.length; i++){
+          mkdirp(`${folder_path}/pair_${i}`, function (err) {
+            if (err) console.error(err)
+            else console.log(`Created pair location ${i}.`);
+            tempPairFolder = `${folder_path}/pair_${i}`;
+          });    
+        }
         setTimeout(function(){
           $('.main-content').slick('slickNext');
         }, 1000);
@@ -120,15 +126,12 @@ function chooseDestFolder(){
     chooser.trigger('click'); 
 }
 
-
-
-
 var copyLeft = function(i){
   var promise = new Promise(function(resolve, reject){
     leftSoundsArray;
     var leftFileName = path.basename(leftSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var leftStream;
-    var leftCopy = fs.createWriteStream(`${folder_path}/${leftFileName}.mp3`);
+    var leftCopy = fs.createWriteStream(`${folder_path}/pair_${i}/${leftFileName}.mp3`);
     leftStream = fs.createReadStream(leftSoundsArray[i]);
     leftStream.pipe(leftCopy);
     leftStream.on('end', function() {
@@ -144,7 +147,7 @@ var copyRight = function(i){
     rightSoundsArray;
     var rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
     var rightStream;
-    var rightCopy = fs.createWriteStream(`${folder_path}/${rightFileName}.mp3`);
+    var rightCopy = fs.createWriteStream(`${folder_path}/pair_${i}/${rightFileName}.mp3`);
     rightStream = fs.createReadStream(rightSoundsArray[i]);
     rightStream.pipe(rightCopy);
     rightStream.on('end', function() {
@@ -162,7 +165,9 @@ var merge = function(i){
     rightFileName = path.basename(rightSoundsArray[i]).replace(/\.[^/.]+$/, "");
     outputFileName = `${leftFileName}_${rightFileName}`;
     console.log('merged:', outputFileName);
-    fileMergePairs(tempDir, folder_path, outputFileName);
+    var sourceFolder = `${folder_path}/pair_${i}`;
+    console.log(sourceFolder);
+    fileMergePairs(tempDir, sourceFolder , outputFileName);
   });
 }
 
@@ -181,15 +186,7 @@ $('#mergeFiles').click(function(){
     copyLeft(i)
       .then(copyRight)
       .then(merge);
-    $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`); 
-    /*
-    stream.on('end', function() {
-        //console.log('added file', stream);
-        $('.slide3content > progress').attr('value', totalVal);
-    });
-    */
-    //$('.slide3content > progress').attr('value', totalVal);
-    
+    $('#outputFiles').append(`<p>${folder_path}/${outputFileName}.mp3</p>`);     
   } 
 });
 
