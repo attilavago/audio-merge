@@ -63,6 +63,7 @@ $('#right-remove').click(function(){
 			//console.log(files[i].name);
   			$('#left-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
         leftSoundsArray.push(files[i].path);
+        console.log(leftSoundsArray);
 		}
     $('#left > .fileCounter > .counter').append(leftSoundsArray.length);
     });
@@ -79,7 +80,7 @@ $('#right-remove').click(function(){
         //console.log(files[i].name);
           $('#right-file-pool > .files').append(`<p data-source="${files[i].path}">${files[i].name}</p>`);
           rightSoundsArray.push(files[i].path);
-          //console.log(rightSoundsArray);
+          console.log(rightSoundsArray);
       }
       $('#right > .fileCounter > .counter').append(rightSoundsArray.length);
       if(leftSoundsArray.length == rightSoundsArray.length){
